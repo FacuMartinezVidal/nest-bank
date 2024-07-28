@@ -23,7 +23,7 @@ export class UsersController {
     try {
       return this.usersService.findById(id);
     } catch (error) {
-      throw Error(error);
+      throw error;
     }
   }
 
