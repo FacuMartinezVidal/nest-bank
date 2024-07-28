@@ -5,13 +5,10 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDTO } from './dto/users.dto';
 
-@UsePipes(ValidationPipe)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -23,11 +20,11 @@ export class UsersController {
 
   @Get('/:id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return {
-      id: id,
-      email: 'email',
-      password: 'password',
-    };
+    try {
+      return this.usersService.findById(id);
+    } catch (error) {
+      throw Error(error);
+    }
   }
 
   @Post()
